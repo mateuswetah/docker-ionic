@@ -63,12 +63,12 @@ RUN ["/opt/tools/android-accept-licenses.sh", "android update sdk --all --no-ui 
 
 
 #RUN cd && \
-#	git clone https://github.com/medialab-ufg/rhs-app.git && \
-#	cd 	rhs-app && \
+#	git clone SOME_REPOSITORY && \
+#	cd myApp && \
 #	npm install && \
 #	ionic cordova plaform add android
 
-#WORKDIR rhs-app
+#WORKDIR myAapp
 
 EXPOSE 8100 35729
 #CMD ["ionic", "run"]
