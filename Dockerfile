@@ -6,36 +6,34 @@ ENV DEBIAN_FRONTEND=noninteractive \
     NODE_VERSION=7.4.0 \
     NPM_VERSION=4.0.5 \
     IONIC_VERSION=3.5.0 \
-    CORDOVA_VERSION=7.0.1\
-	CORDOVA_ANDROID_VERSION=latest
+    CORDOVA_VERSION=7.0.1
 
 # Install basics
 RUN apt-get update &&  \
-    apt-get install -y git wget curl unzip ruby && \
+    apt-get install -y sudo git wget curl unzip ruby && \
 
     curl --retry 3 -SLO "http://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" && \
     tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 && \
     rm "node-v$NODE_VERSION-linux-x64.tar.gz" && \
     npm install -g npm@"$NPM_VERSION" && \
-    npm install -g cordova@"$CORDOVA_VERSION" ionic@"$IONIC_VERSION" cordova-android@latest && \
-    npm cache clear  && \
+    npm install -g cordova@"$CORDOVA_VERSION" ionic@"$IONIC_VERSION" && \
+    npm cache clear && \
 
+#    ionic start myApp sidemenu && \
+
+
+#ANDROID
 #JAVA
 
-# Install python-software-properties (so you can do add-apt-repository)
-	apt-get update && apt-get install -y -q python-software-properties software-properties-common  && \
+# install python-software-properties (so you can do add-apt-repository)
+    apt-get update && apt-get install -y -q python-software-properties software-properties-common  && \
 
     add-apt-repository ppa:webupd8team/java -y && \
     echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
     apt-get update && apt-get -y install oracle-java8-installer && \
 
-#ANDROID
 
-# Install Gradle
-	add-apt-repository ppa:cwchien/gradle -y && \
-	apt-get update  && \
-	apt-get install gradle -y && \
-
+#ANDROID STUFF
     echo ANDROID_HOME="${ANDROID_HOME}" >> /etc/environment && \
     dpkg --add-architecture i386 && \
     apt-get update && \
@@ -50,25 +48,26 @@ RUN apt-get update &&  \
     tar xzf android-sdk.tgz && \
     rm -f android-sdk.tgz && \
     chown -R root. /opt
+	# Setup environment
 
-# Setup environment
 ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:/opt/tools
 
 # Install sdk elements
 COPY tools /opt/tools
 
-RUN ["/opt/tools/android-accept-licenses.sh", "android update sdk --all --no-ui --filter platform-tools,tools,build-tools-25.0.0,android-25,extra-android-support,extra-android-m2repository,extra-google-m2repository"]
-
-# RUN unzip ${ANDROID_HOME}/temp/*.zip -d ${ANDROID_HOME}
-
-
-#RUN cd && \
-#	git clone https://github.com/medialab-ufg/rhs-app.git && \
-#	cd 	rhs-app && \
-#	npm install && \
-#	ionic cordova plaform add android
-
-#WORKDIR rhs-app
-
+RUN ["/opt/tools/android-accept-licenses.sh", "android update sdk --all --no-ui --filter platform-tools,tools,build-tools-23.0.2,android-23,extra-android-support,extra-android-m2repository,extra-google-m2repository"]
+RUN unzip ${ANDROID_HOME}/temp/*.zip -d ${ANDROID_HOME}
+#WORKDIR myApp
 EXPOSE 8100 35729
-#CMD ["ionic", "run"]
+
+####
+
+ADD init-user.sh /init-user.sh
+RUN chmod a+x /init-user.sh
+
+ENTRYPOINT ["/init-user.sh"]
+
+####
+
+
+# CMD ["ionic", "serve"]
