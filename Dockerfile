@@ -6,7 +6,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
     NODE_VERSION=7.4.0 \
     NPM_VERSION=4.0.5 \
     IONIC_VERSION=3.5.0 \
-    CORDOVA_VERSION=7.0.1
+    CORDOVA_VERSION=7.0.1\
+	CORDOVA_ANDROID_VERSION=latest
 
 # Install basics
 RUN apt-get update &&  \
@@ -16,10 +17,8 @@ RUN apt-get update &&  \
     tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 && \
     rm "node-v$NODE_VERSION-linux-x64.tar.gz" && \
     npm install -g npm@"$NPM_VERSION" && \
-    npm install -g cordova@"$CORDOVA_VERSION" ionic@"$IONIC_VERSION" && \
-    npm cache clear && \
-
-#    ionic start myApp sidemenu && \
+    npm install -g cordova@"$CORDOVA_VERSION" ionic@"$IONIC_VERSION" cordova-android@latest && \
+    npm cache clear  && \
 
 
 #ANDROID
@@ -32,8 +31,13 @@ RUN apt-get update &&  \
     echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
     apt-get update && apt-get -y install oracle-java8-installer && \
 
+#ANDROID
 
-#ANDROID STUFF
+# Install Gradle
+	add-apt-repository ppa:cwchien/gradle -y && \
+	apt-get update  && \
+	apt-get install gradle -y && \
+
     echo ANDROID_HOME="${ANDROID_HOME}" >> /etc/environment && \
     dpkg --add-architecture i386 && \
     apt-get update && \
@@ -48,16 +52,17 @@ RUN apt-get update &&  \
     tar xzf android-sdk.tgz && \
     rm -f android-sdk.tgz && \
     chown -R root. /opt
-	# Setup environment
 
+# Setup environment
 ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:/opt/tools
 
 # Install sdk elements
 COPY tools /opt/tools
 
-RUN ["/opt/tools/android-accept-licenses.sh", "android update sdk --all --no-ui --filter platform-tools,tools,build-tools-23.0.2,android-23,extra-android-support,extra-android-m2repository,extra-google-m2repository"]
-RUN unzip ${ANDROID_HOME}/temp/*.zip -d ${ANDROID_HOME}
-#WORKDIR myApp
+RUN ["/opt/tools/android-accept-licenses.sh", "android update sdk --all --no-ui --filter platform-tools,tools,build-tools-25.0.0,android-25,extra-android-support,extra-android-m2repository,extra-google-m2repository"]
+
+# RUN unzip ${ANDROID_HOME}/temp/*.zip -d ${ANDROID_HOME}
+
 EXPOSE 8100 35729
 
 ####
@@ -66,8 +71,6 @@ ADD init-user.sh /init-user.sh
 RUN chmod a+x /init-user.sh
 
 ENTRYPOINT ["/init-user.sh"]
-
-####
 
 
 # CMD ["ionic", "serve"]
