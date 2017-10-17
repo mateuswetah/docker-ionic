@@ -1,0 +1,29 @@
+{
+  "user": {
+    "id": "176886",
+    "email": "mateus.m.luna@gmail.com"
+  },
+  "tokens": {
+    "appUser": {},
+    "telemetry": "e5f7bdf9-cf45-4ed5-bfba-38685a9fb7bf",
+    "user": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyNGRjNjcwZC1mYmJlLTRlYmMtYTY2Ni0xOTEwYzk1NWM1ODIifQ.a04939KPUsrtfjdugfwIJAHi_mtUyABWZWuLo0vW8Gk"
+  },
+  "state": {
+    "lastCommand": "2017-10-16T18:48:51.975Z",
+    "doctor": {
+      "ignored": []
+    }
+  },
+  "daemon": {
+    "updates": true
+  },
+  "git": {
+    "setup": false
+  },
+  "backend": "legacy",
+  "telemetry": true,
+  "yarn": false,
+  "version": "3.13.1",
+  "created": "2017-09-22T12:19:05.333Z",
+  "addresses": {}
+}

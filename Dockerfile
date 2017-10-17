@@ -5,8 +5,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
     ANDROID_HOME=/opt/android-sdk-linux \
     NODE_VERSION=7.4.0 \
     NPM_VERSION=4.0.5 \
-    IONIC_VERSION=3.5.0 \
-    CORDOVA_VERSION=7.0.1\
+    IONIC_VERSION=latest \
+    CORDOVA_VERSION=latest\
 	CORDOVA_ANDROID_VERSION=latest
 
 # Install basics

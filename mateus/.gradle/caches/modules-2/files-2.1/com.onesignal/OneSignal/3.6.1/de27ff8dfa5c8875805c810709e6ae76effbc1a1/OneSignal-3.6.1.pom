@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.onesignal</groupId>
+  <artifactId>OneSignal</artifactId>
+  <version>3.6.1</version>
+  <packaging>aar</packaging>
+  <name>OneSignal</name>
+  <description>OneSignal Android SDK</description>
+  <url>https://github.com/one-signal/OneSignal-Android-SDK</url>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://raw.githubusercontent.com/one-signal/OneSignal-Android-SDK/master/LICENSE</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>OneSignal</id>
+      <name>Josh Kasten</name>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:https://github.com/one-signal/OneSignal-Android-SDK</connection>
+    <developerConnection>scm:git:https://github.com/one-signal/OneSignal-Android-SDK</developerConnection>
+    <url>https://github.com/one-signal/OneSignal-Android-SDK</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>com.google.android.gms</groupId>
+      <artifactId>play-services-gcm</artifactId>
+      <version>[10.2.1,11.3.0)</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.android.gms</groupId>
+      <artifactId>play-services-location</artifactId>
+      <version>[10.2.1,11.3.0)</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.android.support</groupId>
+      <artifactId>support-v4</artifactId>
+      <version>[26.0.0,26.1.0)</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.android.support</groupId>
+      <artifactId>customtabs</artifactId>
+      <version>[26.0.0,26.1.0)</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>
