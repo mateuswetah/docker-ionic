@@ -1,28 +1,22 @@
 #### Creates an environement containing java 8, android SDKs, node, python, git, cordova and ionic.
+FROM ubuntu:18.04
 
 MAINTAINER mateus [dot] m [dot] luna [at] gmail [dot] com 
 
-FROM ubuntu:16.04
-
 ### JAVA -------------------------------------------------------------
 
-	# Install python-software-properties (so you can do add-apt-repository)
+	# Install JAVA and software-properties-common (so you can do add-apt-repository)
     RUN set -x && \
 		apt-get update && \
-		apt-get install -y -q python-software-properties software-properties-common  && \
+		apt-get install -y -q wget software-properties-common curl openjdk-8-jre openjdk-8-jdk
 
-		add-apt-repository ppa:webupd8team/java -y && \
-		echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
-		apt-get update && apt-get -y install oracle-java8-installer && \
-		apt-get install -y oracle-java8-set-default
-     
-    ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
+    ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk-amd64
 
 ### Android SDKs ------------------------------------------------------
 
-    ENV ANDROID_SDK_URL="https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz" \
-		ANDROID_BUILD_TOOLS_VERSION=25.0.2 \
-		ANDROID_APIS="android-25" \
+    ENV ANDROID_SDK_URL="https://dl.google.com/android/repository/tools_r25.2.5-linux.zip" \
+		ANDROID_BUILD_TOOLS_VERSION=26.1.1 \
+		ANDROID_APIS="android-29" \
 		ANT_HOME="/usr/share/ant" \
 		MAVEN_HOME="/usr/share/maven" \
 		GRADLE_HOME="/usr/share/gradle" \
@@ -37,8 +31,9 @@ FROM ubuntu:16.04
 
     # Download and extract Android SDK
     RUN mkdir /opt/android-sdk-linux
-    RUN wget --output-document=android-sdk.tgz http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
-    RUN tar xzf "android-sdk.tgz" -C /opt/android-sdk-linux --strip-components=1 && \
+    RUN wget --output-document=tools_r25.2.5-linux.zip $ANDROID_SDK_URL
+    RUN unzip "tools_r25.2.5-linux.zip" -d /opt/android-sdk-linux && \
+		ls -la /opt/android-sdk-linux && \
 		chmod a+x -R $ANDROID_HOME && \
 		chown -R root:root $ANDROID_HOME
 
@@ -58,8 +53,8 @@ FROM ubuntu:16.04
 
 ### NodeJS -----------------------------------------------------------
 
-    ENV NODEJS_VERSION=8.9.1 \
-    NPM_VERSION=5.5.1
+    ENV NODEJS_VERSION=12.16.3 \
+    NPM_VERSION=6.14.4
 
     RUN apt-get -qq update && \
 		wget --output-document=node.tar.gz "http://nodejs.org/dist/v$NODEJS_VERSION/node-v$NODEJS_VERSION-linux-x64.tar.gz" && \
