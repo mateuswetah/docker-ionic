@@ -31,10 +31,10 @@ Once you're inside your docker container and folder, you can follow usual workfl
 git clone *some_ionic_repository* OR ionic start myApp sidemenu
 cd myApp
 npm install
-ionic serve OR ionic cordova run Android.
+ionic serve --external OR ionic cordova run Android.
 ```
 
-If you plan to run `ionic serve`, remember to have your ports free.
+If you plan to run `ionic serve --external` or `ionic cordova run browser --external`, remember to have your ports free.
 If you plan to run `ionic cordova run android`, make sure to:
  - Have your phone plugged and with proper USB connection mode (PTP, sometimes MTP).
  - In case you have adb on your host machine, run `adb kill-server` there, then `adb devices` in your docker.
