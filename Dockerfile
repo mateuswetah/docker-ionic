@@ -1,7 +1,7 @@
 #### Creates an environement containing java 8, android SDKs, node, python, git, cordova and ionic.
 FROM ubuntu:18.04
 
-MAINTAINER mateus [dot] m [dot] luna [at] gmail [dot] com 
+LABEL author mateus[dot]m[dot]luna[at]gmail[dot]com 
 
 ### JAVA -------------------------------------------------------------
 
@@ -14,8 +14,8 @@ MAINTAINER mateus [dot] m [dot] luna [at] gmail [dot] com
 
 ### Android SDKs ------------------------------------------------------
 
-    ENV ANDROID_SDK_URL="https://dl.google.com/android/repository/tools_r25.2.5-linux.zip" \
-		ANDROID_BUILD_TOOLS_VERSION=26.1.1 \
+    ENV ANDROID_SDK_URL="https://dl.google.com/android/repository/build-tools_r29.0.2-linux.zip" \
+		ANDROID_BUILD_TOOLS_VERSION=29.0.2 \
 		ANDROID_APIS="android-29" \
 		ANT_HOME="/usr/share/ant" \
 		MAVEN_HOME="/usr/share/maven" \
@@ -31,8 +31,8 @@ MAINTAINER mateus [dot] m [dot] luna [at] gmail [dot] com
 
     # Download and extract Android SDK
     RUN mkdir /opt/android-sdk-linux
-    RUN wget --output-document=tools_r25.2.5-linux.zip $ANDROID_SDK_URL
-    RUN unzip "tools_r25.2.5-linux.zip" -d /opt/android-sdk-linux && \
+    RUN wget --output-document=build-tools_r29.0.2-linux.zip $ANDROID_SDK_URL
+    RUN unzip "build-tools_r29.0.2-linux.zip" -d /opt/android-sdk-linux && \
 		ls -la /opt/android-sdk-linux && \
 		chmod a+x -R $ANDROID_HOME && \
 		chown -R root:root $ANDROID_HOME
@@ -53,8 +53,8 @@ MAINTAINER mateus [dot] m [dot] luna [at] gmail [dot] com
 
 ### NodeJS -----------------------------------------------------------
 
-    ENV NODEJS_VERSION=12.16.3 \
-    NPM_VERSION=6.14.4
+    ENV NODEJS_VERSION=12.19.0 \
+    NPM_VERSION=6.14.8
 
     RUN apt-get -qq update && \
 		wget --output-document=node.tar.gz "http://nodejs.org/dist/v$NODEJS_VERSION/node-v$NODEJS_VERSION-linux-x64.tar.gz" && \
@@ -83,6 +83,7 @@ MAINTAINER mateus [dot] m [dot] luna [at] gmail [dot] com
 ### Ionic and Cordova ---------------------------------------------
     RUN npm install -g cordova@latest && \
 		npm install -g ionic@latest && \
+		npm install -g native-run && \
 		npm cache verify
 
     # Create, build, delete an empty cordova project to download necessary maven files and keep them in image
